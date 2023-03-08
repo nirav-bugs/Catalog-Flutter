@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "../widgets/drawer.dart";
 
 class HomePage extends StatelessWidget {
   @override
@@ -6,14 +7,12 @@ class HomePage extends StatelessWidget {
     var idk = "flutter";
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nirav First app"),
+        title: const Text("BUGS app"),
       ),
       body: Center(
-        child: Container(
-          child: Text("Welcome to Bugs first $idk App"),
-        ),
+        child: Text("Welcome to Bugs first $idk App"),
       ),
-      drawer: Drawer(),
+      drawer: const MyDrawer(),
     );
   }
 }
