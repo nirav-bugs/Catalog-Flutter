@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:myfirstproject/pages/login.dart';
+import 'package:myfirstproject/utlis/routes.dart';
+import 'package:myfirstproject/widgets/themes.dart';
+import 'pages/login.dart';
 import 'pages/home_page.dart';
-import "./utlis/routes.dart";
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
+// ignore: use_key_in_widget_constructors
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  // const MyApp({Key? key}) : super(key: key)
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginPage(),
-      // system mode
+      home: const HomePage(),
       themeMode: ThemeMode.light,
-      // below on light mode
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
-      // specs for dark modes
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
+      theme: MyTheme.lightTheme(context),
+      darkTheme: MyTheme.darkTheme(context),
       debugShowCheckedModeBanner: false,
-      initialRoute: MyRoutes.homeRoute,
+      initialRoute: MyRoutes.loginRoute,
       routes: {
         MyRoutes.homeRoute: (context) => HomePage(),
         MyRoutes.loginRoute: (context) => LoginPage(),
