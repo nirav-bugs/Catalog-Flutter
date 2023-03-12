@@ -1,98 +1,161 @@
-// import "dart:developer";
-// import "../widgets/ItemWidget.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
-import "dart:convert";
-import "package:flutter/material.dart";
-import "package:myfirstproject/models/catalog.dart";
-import "../widgets/drawer.dart";
-import "package:flutter/services.dart" as rootBundle;
+import '../models/catalog.dart';
+import '../widgets/drawer.dart';
 
-class HomePage extends StatelessWidget {
-  // final dummyList = List.generate(50, (index) => CatalogModel.Items[0]);
+// ignore: use_key_in_widget_constructors
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-  // const HomePage({super.key});
+class _HomePageState extends State<HomePage> {
+  final int days = 30;
+
+  final String name = "Nirav Bugs";
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  loadData() async {
+    await Future.delayed(const Duration(seconds: 2));
+    final catalogueJson =
+        await rootBundle.loadString("assets/files/catalog.json");
+    final decodedData = jsonDecode(catalogueJson);
+    var productsData = decodedData["products"];
+    CatalogueModel.items = List.from(productsData)
+        .map<Item>((item) => Item.fromMap(item))
+        .toList();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    var idk = "flutter";
     return Scaffold(
       appBar: AppBar(
-        title: const Text("BUGS app"),
+        title: const Text(
+          "Catalogue App",
+        ),
       ),
-      // body: Center(
-      //   child: Text("Welcome to Bugs first $idk App"),
-      // ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(16.0),
-      //   child: ListView.builder(
-      //       itemCount: CatalogModel.items.length,
-      //       itemBuilder: (context, index) {
-      //         return ItemWidget(
-      //           item: CatalogModel.items[index],
-      //         );
-      //       }),
-      // ),
-      body: FutureBuilder(
-          future: ReadJsonData(),
-          builder: (index, data) {
-            if (data.hasError) {
-              return Text("${data.error}");
-            }
-            // if (data.hasData) {
-            //   var items = data.data as List<catalogModel>;
-            //   return ListView.builder(
-            //       itemCount: items.length,
-            //       itemBuilder: (context, index) {
-            //         return Card(
-            //           child: ListTile(
-            //             leading: Image.network(items[index].image.toString()),
-            //             title: Text(items[index].name.toString()),
-            //             subtitle: Text(items[index].desc.toString()),
-            //             trailing: Text(
-            //               "\$${items[index].price.toString()}",
-            //               style: const TextStyle(
-            //                 color: Colors.deepPurple,
-            //                 fontWeight: FontWeight.bold,
-            //               ),
-            //             ),
-            //           ),
-            //         );
-            //       });
-            // }
-            if (data.hasData) {
-              var items = data.data as List<catalogModel>;
-              return GridView.builder(
-                  itemCount: items.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 17,
-                      crossAxisCount: 2),
-                  itemBuilder: (context, index) {
-                    return Card(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: (CatalogueModel.items != null &&
+                CatalogueModel.items!.isNotEmpty)
+            ? GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                ),
+                itemBuilder: (context, index) {
+                  final item = CatalogueModel.items![index];
+                  return Card(
                       clipBehavior: Clip.antiAlias,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       child: GridTile(
-                        header: Text(items[index].name.toString()),
-                        child: Image.network(items[index].image.toString()),
-                        footer: Text(items[index].price.toString()),
-                      ),
-                    );
-                  });
-            } else {
-              return Center(
+                        header: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: const BoxDecoration(
+                            color: Colors.indigo,
+                          ),
+                          child: Text(
+                            item.name,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        footer: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          child: Text(
+                            item.price.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        child: Image.network(
+                          item.image,
+                        ),
+                      ));
+                },
+                itemCount: CatalogueModel.items?.length,
+              )
+            : const Center(
                 child: CircularProgressIndicator(),
-              );
-            }
-          }),
+              ),
+      ),
       drawer: const MyDrawer(),
     );
   }
 }
 
-Future<List<catalogModel>> ReadJsonData() async {
-  final jsondata =
-      await rootBundle.rootBundle.loadString("assets/files/catalog.json");
-  final list = json.decode(jsondata) as List<dynamic>;
-  return list.map((e) => catalogModel.fromJson(e)).toList();
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import "dart:convert";
+// // import "dart:html";
+// import "package:flutter/material.dart";
+// import "package:myfirstproject/models/catalog.dart";
+// // import "package:myfirstproject/widgets/themes.dart";
+// import "package:velocity_x/velocity_x.dart";
+// // import "../widgets/drawer.dart";
+// import "package:flutter/services.dart" as rootBundle;
+
+// class HomePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     var idk = "flutter";
+//     return Scaffold(
+//       body: SafeArea(
+//         child: Container(
+//           padding: const EdgeInsets.all(32),
+//           child: Column(
+//             children: const [
+//               Header(),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class Header extends StatelessWidget {
+//   const Header({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         "Catalog App".text.xl4.bold.color(Colors.deepPurple).make(),
+//         "Trending Products".text.xl2.bold.color(Colors.deepPurple).make(),
+//       ],
+//     );
+//   }
+// }
+
+// Future<List<catalogModel>> ReadJsonData() async {
+//   final jsondata =
+//       await rootBundle.rootBundle.loadString("assets/files/catalog.json");
+//   final list = json.decode(jsondata) as List<dynamic>;
+//   return list.map((e) => catalogModel.fromJson(e)).toList();
+// }
