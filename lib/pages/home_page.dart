@@ -38,23 +38,44 @@ class HomePage extends StatelessWidget {
             if (data.hasError) {
               return Text("${data.error}");
             }
+            // if (data.hasData) {
+            //   var items = data.data as List<catalogModel>;
+            //   return ListView.builder(
+            //       itemCount: items.length,
+            //       itemBuilder: (context, index) {
+            //         return Card(
+            //           child: ListTile(
+            //             leading: Image.network(items[index].image.toString()),
+            //             title: Text(items[index].name.toString()),
+            //             subtitle: Text(items[index].desc.toString()),
+            //             trailing: Text(
+            //               "\$${items[index].price.toString()}",
+            //               style: const TextStyle(
+            //                 color: Colors.deepPurple,
+            //                 fontWeight: FontWeight.bold,
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       });
+            // }
             if (data.hasData) {
               var items = data.data as List<catalogModel>;
-              return ListView.builder(
+              return GridView.builder(
                   itemCount: items.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 17,
+                      crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return Card(
-                      child: ListTile(
-                        leading: Image.network(items[index].image.toString()),
-                        title: Text(items[index].name.toString()),
-                        subtitle: Text(items[index].desc.toString()),
-                        trailing: Text(
-                          "\$${items[index].price.toString()}",
-                          style: const TextStyle(
-                            color: Colors.deepPurple,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: GridTile(
+                        header: Text(items[index].name.toString()),
+                        child: Image.network(items[index].image.toString()),
+                        footer: Text(items[index].price.toString()),
                       ),
                     );
                   });
