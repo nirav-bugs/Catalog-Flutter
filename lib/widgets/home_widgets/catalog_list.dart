@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myfirstproject/pages/home_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../models/catalog.dart';
 import '../../pages/home_detail_page.dart';
@@ -16,7 +15,9 @@ class CatalogList extends StatelessWidget {
         itemBuilder: (context, index) {
           final catalog = CatalogueModel.items![index];
           return InkWell(
-              child: CatalogItem(catalog: catalog),
+              child: Hero(
+                  tag: Key(catalog.id.toString()),
+                  child: CatalogItem(catalog: catalog)),
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -56,8 +57,9 @@ class CatalogItem extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(MyTheme.darkBluish),
-                        shape: MaterialStateProperty.all(StadiumBorder())),
-                    child: "buy".text.make())
+                        shape:
+                            MaterialStateProperty.all(const StadiumBorder())),
+                    child: "Add to cart".text.make())
               ],
             ).pOnly(right: 8.0)
           ],
