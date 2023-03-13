@@ -2,6 +2,14 @@ import 'dart:convert';
 
 class CatalogueModel {
   static List<Item>? items;
+
+  // get items by id
+  static Item getbyid(int id) =>
+      items!.firstWhere((element) => element.id == id, orElse: null);
+
+  // get by positon
+
+  static Item getbypos(int pos) => items![pos];
 }
 
 class Item {
@@ -86,8 +94,6 @@ class Item {
         image.hashCode;
   }
 }
-
-
 
 // class catalogModel {
 //   int? id;
