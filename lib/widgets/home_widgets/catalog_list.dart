@@ -13,7 +13,7 @@ class CatalogList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: CatalogueModel.items?.length,
         itemBuilder: (context, index) {
-          final catalog = CatalogueModel.getbypos(index);
+          final catalog = CatalogueModel.items![index];
           return InkWell(
               child: Hero(
                   tag: Key(catalog.id.toString()),
