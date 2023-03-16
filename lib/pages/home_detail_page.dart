@@ -4,6 +4,7 @@ import 'package:myfirstproject/widgets/themes.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../models/catalog.dart';
+import '../widgets/home_widgets/add_to_cart.dart';
 
 class HomeDetailPage extends StatelessWidget {
   final Item catalog;
@@ -20,14 +21,16 @@ class HomeDetailPage extends StatelessWidget {
         buttonPadding: Vx.mH4,
         children: [
           "\$${catalog.price}".text.bold.xl4.color(MyTheme.darkBluish).make(),
-          ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(MyTheme.darkBluish),
-                      shape: MaterialStateProperty.all(const StadiumBorder())),
-                  child: "Add to cart".text.make())
-              .wh(120, 50)
+          // ElevatedButton(
+          //         onPressed: () {},
+          //         style: ButtonStyle(
+          //             backgroundColor:
+          //                 MaterialStateProperty.all(MyTheme.darkBluish),
+          //             shape: MaterialStateProperty.all(const StadiumBorder())),
+          //         child: "Add to cart".text.make())
+          addToCart(
+            catalog: catalog,
+          ).wh(120, 50)
         ],
       ).wh(150, 56).p20(),
       backgroundColor: MyTheme.creamColor,
