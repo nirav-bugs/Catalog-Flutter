@@ -49,9 +49,9 @@ class CatalogItem extends StatelessWidget {
             10.heightBox,
             ButtonBar(
               alignment: MainAxisAlignment.spaceBetween,
-              buttonPadding: Vx.mH4,
+              buttonPadding: Vx.m0,
               children: [
-                "\$${catalog.price}".text.bold.xl.make(),
+                "\$${catalog.price}".text.bold.make(),
                 ElevatedButton(
                     onPressed: () {},
                     style: ButtonStyle(
@@ -61,10 +61,10 @@ class CatalogItem extends StatelessWidget {
                             MaterialStateProperty.all(const StadiumBorder())),
                     child: "Add to cart".text.make())
               ],
-            ).pOnly(right: 8.0)
+            ).pOnly(right: 4)
           ],
-        ))
+        )),
       ],
-    )).white.rounded.square(150).py16.make();
+    )).white.rounded.square(150).make().py16();
   }
 }
