@@ -6,19 +6,14 @@ import '../../models/cart.dart';
 import '../../models/catalog.dart';
 import '../themes.dart';
 
-class addToCart extends StatefulWidget {
+class addToCart extends StatelessWidget {
   final Item catalog;
 
-  const addToCart({
+  addToCart({
     super.key,
     required this.catalog,
   });
 
-  @override
-  State<addToCart> createState() => _addToCartState();
-}
-
-class _addToCartState extends State<addToCart> {
   bool isAdded = false;
   @override
   Widget build(BuildContext context) {
@@ -27,9 +22,9 @@ class _addToCartState extends State<addToCart> {
           isAdded = isAdded.toggle();
           final _catalog = CatalogueModel();
           final _cart = CartModel();
-          _cart.add(widget.catalog);
+          _cart.add(catalog);
           _cart.catalog = _catalog;
-          setState(() {});
+          // setState(() {});
         },
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(MyTheme.darkBluish),
